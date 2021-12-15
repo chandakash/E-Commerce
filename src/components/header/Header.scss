@@ -1,0 +1,31 @@
+.header{
+    // background-color: cyan;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: 7vh;
+    padding: 10px 0px;
+    position: sticky;
+    top: 0;
+
+    .logo-container{
+        // background-color: green;
+        height: 100%;
+        width: 4vw;
+        padding:1.5vh;
+    }
+    .options{
+        width: 50%;
+        display: flex;
+        // background-color: red;
+        align-items: center;
+        justify-content: flex-end;
+    }
+    .option{
+        padding: 0px 10px;
+    }
+    &.active{
+        background-color: rgb(204, 237, 243);
+    }
+}

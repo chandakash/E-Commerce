@@ -5,6 +5,9 @@
     border: 1px solid black;
     height: 40vh;
     overflow: hidden;
+    border-radius: 10px;
+    box-shadow:  2px 8px 4px rgba(0,0,0,0.2);
+
     &:hover {
         cursor: pointer;
     
