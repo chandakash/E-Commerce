@@ -13,7 +13,7 @@
         // background-color: green;
         height: 100%;
         width: 4vw;
-        padding:1.5vh;
+        // padding:1vh;
     }
     .options{
         width: 50%;
@@ -23,7 +23,8 @@
         justify-content: flex-end;
     }
     .option{
-        padding: 0px 10px;
+        padding: 10px;
+        cursor: pointer;
     }
     &.active{
         background-color: rgb(204, 237, 243);

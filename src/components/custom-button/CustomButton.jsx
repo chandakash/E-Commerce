@@ -3,8 +3,8 @@ import './CustomButton.scss'
 
 export const CustomButton = ({children, ...otherProps}) => {
     return (
-        <div className='custom-button ' {...otherProps}>
+        <button className='custom-button ' {...otherProps}>
             {children}
-        </div>
+        </button>
     )
 }
