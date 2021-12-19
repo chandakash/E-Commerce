@@ -3,40 +3,42 @@ import './App.css';
 import { HomePage } from './pages/homepage/HomePage';
 import { Routes, Route} from 'react-router-dom';
 import Shop from './pages/shop/Shop';
-import { Header } from './components/header/Header';
+import  Header  from './components/header/Header';
 import { Authentication } from './pages/authentication/Authentication';
 import { Contact} from './pages/contact/Contact';
 import {auth,createUserProfileDocument} from './firebase/firebase.utils'
-
-export default class App extends Component{
+import {connect} from 'react-redux'
+import {setCurrentUser} from './redux/user/userActions'
+class App extends Component{
   
-  constructor(){
-    super();
+  // constructor(){
+  //   super();
 
-    this.state = {
-      currentUser: null
-    };
-  }
+  //   this.state = {
+  //     currentUser: null
+  //   };
+  // }
 
   unsubscribeFromAuth = null;
 
   componentDidMount() {
+
+    const {setCurrentUser} = this.props;
+
     this.unsubscribeFromAuth = auth.onAuthStateChanged(async userAuth => {
       if (userAuth) {
         const userRef = await createUserProfileDocument(userAuth);
 
         userRef.onSnapshot(snapShot => {
-          this.setState({
-            currentUser: {
+          setCurrentUser({
               id: snapShot.id,
               ...snapShot.data()
-            }
           });
           console.log(this.state)
         });
       }
 
-      this.setState({ currentUser: userAuth });
+      setCurrentUser(userAuth);
     });
   }
 
@@ -47,7 +49,7 @@ export default class App extends Component{
   render(){
     return (
       <div className="App">
-        <Header currentUser = {this.state.currentUser}/>
+        <Header />
         <Routes>
           <Route exact path='/' element = {<HomePage/>}/>
           <Route   path = '/shop' element = {<Shop/>}/>
@@ -58,4 +60,10 @@ export default class App extends Component{
     );
   }
   
-}
+};
+
+const mapDispatchToProps = dispatch =>({
+  setCurrentUser: user => dispatch(setCurrentUser(user))
+
+})
+export default connect(null, mapDispatchToProps)(App);

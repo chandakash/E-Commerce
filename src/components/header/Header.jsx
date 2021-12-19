@@ -3,8 +3,9 @@ import {Link} from 'react-router-dom'
 import {ReactComponent as CrownLogo} from '../../assets/crown.svg'
 import './Header.scss'
 import {auth} from '../../firebase/firebase.utils'
+import { connect } from 'react-redux'
 
-export const Header = ({currentUser}) => {
+const Header = ({currentUser}) => {
 
     const [header, setHeader] = useState(false);
 
@@ -34,4 +35,10 @@ export const Header = ({currentUser}) => {
             </div>
         </div>
     )
-}
+};
+
+const mapStateToProps = state => ({
+    currentUser : state.user.currentUser
+})
+
+export default connect(mapStateToProps)(Header);
