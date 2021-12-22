@@ -4,8 +4,10 @@ import {ReactComponent as CrownLogo} from '../../assets/crown.svg'
 import './Header.scss'
 import {auth} from '../../firebase/firebase.utils'
 import { connect } from 'react-redux'
+import CartIcon from '../cart-icon/CartIcon.jsx'
+import CartDropdown from '../cart-dropdown/CartDropdown'
 
-const Header = ({currentUser}) => {
+const Header = ({currentUser, hidden}) => {
 
     const [header, setHeader] = useState(false);
 
@@ -32,13 +34,19 @@ const Header = ({currentUser}) => {
                     :
                     <Link className='option' to='/signin'>SIGN-IN</Link>
                 }
+                <CartIcon/>
             </div>
+            {
+                hidden ? null : <CartDropdown/>
+            }
         </div>
     )
 };
 
-const mapStateToProps = state => ({
-    currentUser : state.user.currentUser
+const mapStateToProps = ({user : {currentUser}, cart : {hidden}}) => ({
+    // currentUser : state.user.currentUser
+    currentUser,
+    hidden
 })
 
 export default connect(mapStateToProps)(Header);
