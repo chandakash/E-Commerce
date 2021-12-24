@@ -9,16 +9,9 @@ import { Contact} from './pages/contact/Contact';
 import {auth,createUserProfileDocument} from './firebase/firebase.utils'
 import {connect} from 'react-redux'
 import {setCurrentUser} from './redux/user/userActions'
-
-const clearCacheData = () => {
-  caches.keys().then((names) => {
-    console.log(names)
-    names.forEach((name) => {
-      caches.delete(name);
-    });
-  });
-  alert('Complete Cache Cleared')
-};
+import { selectCurrentUser } from './redux/user/userSelectors';
+import {createStructuredSelector} from 'reselect'
+import Checkout from './pages/checkout/Checkout';
 class App extends Component{
   
   // constructor(){
@@ -61,12 +54,12 @@ class App extends Component{
     return (
       <div className="App">
         <Header />
-        <button onClick={() => clearCacheData()} >Clear Cache</button>
         <Routes>
-          <Route exact path='/' element = {<HomePage/>}/>
-          <Route   path = '/shop' element = {<Shop/>}/>
-          <Route   path= '/signin' element = { this.props.currentUser ? <Navigate to='/'/> : <Authentication/>} />
-          <Route  exact path= '/contact' element = {<Contact/>}/>
+          <Route path = '/' element = {<HomePage/>}/>
+          <Route path = '/shop' element = {<Shop/>}/>
+          <Route path = '/signin' element = { this.props.currentUser ? <Navigate to='/'/> : <Authentication/>} />
+          <Route path = '/contact' element = {<Contact/>}/>
+          <Route path = '/checkout' element = {<Checkout/>}/>
         </Routes>
       </div>
     );
@@ -74,8 +67,16 @@ class App extends Component{
   
 };
 
-const mapStateToProps = ({user}) => ({
-  currentUser : user.currentUser
+// const mapStateToProps = ({user}) => ({
+//   currentUser : user.currentUser
+// });
+
+// const mapStateToProps = (state) => ({
+//   currentUser : selectCurrentUser(state)
+// });
+
+const mapStateToProps = createStructuredSelector({
+  currentUser : selectCurrentUser
 });
 
 const mapDispatchToProps = dispatch =>({
